@@ -28,7 +28,7 @@ const MapView: React.FC<MapViewProps> = ({ geoLocation }) => {
       center={geoLocation} 
       zoom={5} 
       scrollWheelZoom={true} 
-      style={{ height: "50vh", width: "100%" }} 
+      style={{ height: "50vh", width: "40%" }} 
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

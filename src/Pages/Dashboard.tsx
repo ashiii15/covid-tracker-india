@@ -11,11 +11,18 @@ import MapView from "../components/MapView";
 import { LatLngExpression } from "leaflet";
 import "./Dashboard.css";
 import LineChart from "../components/LineChart";
+interface CovidData {
+  loc: string;
+  confirmedCasesIndian: number;
+  confirmedCasesForeign: number;
+  discharged: number;
+  deaths: number;
+}
 
-const Dashboard = () => {
-  const [selectedItem, setSelectedItem] = useState<any>({});
-  const [covidCounts, setCovidCounts] = useState<any>([]);
-  const [pieChartLabels, setPieChartLabels] = useState<any>([]);
+const Dashboard: React.FC = () => {
+  const [selectedItem, setSelectedItem] = useState<CovidData | null>(null);
+  const [covidCounts, setCovidCounts] = useState<number[]>([]);
+  const [pieChartLabels, setPieChartLabels] = useState<string[]>([]);
 
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.covid.data);
@@ -35,42 +42,51 @@ const Dashboard = () => {
   }, [data, dispatch]);
 
   useEffect(() => {
-    const { loc, ...rest } = selectedItem;
-    setCovidCounts(Object.values(rest));
-    setPieChartLabels(Object.keys(rest));
+    if (selectedItem) {
+      const { loc, ...rest } = selectedItem;
+      setCovidCounts(Object.values(rest));
+      setPieChartLabels(Object.keys(rest));
+    }
   }, [selectedItem]);
 
-  const handleFilterChange = (event: any) => {
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedItem = event.target.value;
     const selectedData = data.find((item) => item.loc === selectedItem);
     setSelectedItem(selectedData);
     dispatch(fetchGeoLocationByState(selectedData.loc));
   };
 
-  const linesData = [
-    {
-      label: "Indian Cases",
-      color: "blue",
-      data: [selectedItem.confirmedCasesIndian],
-    },
-    {
-      label: "Foreign Cases",
-      color: "green",
-      data: [selectedItem.confirmedCasesForeign],
-    },
-    {
-      label: "Discharged",
-      color: "orange",
-      data: [selectedItem.discharged],
-    },
-    {
-      label: "Deaths",
-      color: "red",
-      data: [selectedItem.deaths],
-    },
-  ];
+  const linesData = selectedItem
+    ? [
+        {
+          label: "Indian Cases",
+          color: "blue",
+          data: [selectedItem.confirmedCasesIndian],
+        },
+        {
+          label: "Foreign Cases",
+          color: "green",
+          data: [selectedItem.confirmedCasesForeign],
+        },
+        {
+          label: "Discharged",
+          color: "orange",
+          data: [selectedItem.discharged],
+        },
+        {
+          label: "Deaths",
+          color: "red",
+          data: [selectedItem.deaths],
+        },
+      ]
+    : [];
 
-  const categories = ["Confirmed Cases", "Foreign Cases", "Discharged", "Deaths"];
+  const categories = [
+    "Confirmed Cases",
+    "Foreign Cases",
+    "Discharged",
+    "Deaths",
+  ];
 
   return (
     <div>
@@ -78,11 +94,13 @@ const Dashboard = () => {
       <Filter data={data} handleFilterChange={handleFilterChange} />
       <div className="container">
         <PieChart values={covidCounts} labels={pieChartLabels} />
-        <LineChart  title={`COVID-19 Cases in ${selectedItem.loc}`}
+        <LineChart
+          title={`COVID-19 Cases in ${selectedItem?.loc}`}
           xAxisLabel="Categories"
           yAxisLabel="Number of Cases"
           categories={categories}
-          linesData={linesData} />
+          linesData={linesData}
+        />
         <MapView geoLocation={geoLocation} />
       </div>
     </div>
