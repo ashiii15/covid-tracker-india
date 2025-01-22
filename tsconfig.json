@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "target": "ES6",                 // Transpile to ES6 JavaScript
+      "module": "ESNext",              // Use ESNext module resolution
+      "jsx": "react",                 // Enable JSX in React projects
+      "strict": true,                 // Enable all strict type-checking options
+      "esModuleInterop": true,        // Allow ES Module and CommonJS interoperability
+      "forceConsistentCasingInFileNames": true, // Enforce consistent file name casing
+      "moduleResolution": "node",     // Resolve modules in Node.js style
+      "skipLibCheck": true,           // Skip type checking of library files
+      "resolveJsonModule": true       // Allow importing JSON files
+    },
+    "include": ["src"],               // Include all files in the `src` folder
+    "exclude": ["node_modules"]       // Exclude the `node_modules` folder
+  }
+  
