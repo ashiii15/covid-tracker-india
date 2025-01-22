@@ -1,10 +1,11 @@
 import React from 'react'
+import './Filter.css'
 
 function Filter({data,handleDropDownChange}) {
   return (
-    <div>
-    <label>Choose an state :</label>
-    <select onChange={handleDropDownChange}>
+    <div className="filter-container">
+    <label className="filter-label">Choose an state :</label>
+    <select  className="filter-select" onChange={handleDropDownChange}>
     {data.map((state) => {
       return (
           <option key={state.loc}>{state.loc}</option>

@@ -2,6 +2,9 @@ import React from 'react'
 import Plot from 'react-plotly.js'
 
 const PieChart = ({values,labels})=> {
+  if (values.length === 0 || labels.length === 0) {
+    return <div style={{ textAlign: 'center', color: 'red' }}>No data available to display.</div>;
+  }
 
   return (
     <Plot 
