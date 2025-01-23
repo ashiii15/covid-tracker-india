@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
     "Deaths",
   ];
   return (
-    <div>
+    <div className="dashboard">
       <h1>Covid Tracker</h1>
       <Filter data={data} handleFilterChange={handleFilterChange} />
       <div className="cases">
@@ -107,20 +107,22 @@ const Dashboard: React.FC = () => {
         <h3> Recovered Cases :{selectedItem?.discharged}</h3>
         <h3> Death Cases :{selectedItem?.deaths}</h3>
       </div>
-        <div className="pieContainer">
+      <div className="pieContainer">
         <PieChart values={covidCounts} labels={pieChartLabels} />
-        </div>
-        <div className="lineMapContainer">
+      </div>
+      <div className="lineMapContainer">
+      <div className="lineChartContainer">
         <LineChart
           title={`COVID-19 Cases in ${selectedItem?.loc}`}
           xAxisLabel="Categories"
           yAxisLabel="Number of Cases"
           categories={categories}
           linesData={linesData}
-          />
-        <MapView geoLocation={geoLocation} />
-          </div>
+        />
+        </div>
+          <MapView geoLocation={geoLocation}/>
       </div>
+    </div>
   );
 };
 export default Dashboard;
