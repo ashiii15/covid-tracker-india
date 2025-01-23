@@ -1,31 +1,43 @@
-h1 {
-  margin-bottom: 20px;
+.lineMapContainer{
+  display: flex;
+  gap: 1rem;
+  margin-top: 30rem;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
 }
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
 .cases {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; 
+  align-items: center;     
+  justify-content: center; 
   background-color: #f9f9f9; 
   border: 2px solid #e0e0e0; 
-  border-radius: 10px; 
-  padding: 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  margin: 20px auto; 
-  width: 80%; 
-  max-width: 400px;
+  border-radius: 10px;      
+  padding: 20px;            
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;       
+  width: 80%;               
+  max-width: 400px;         
   font-family: 'Arial', sans-serif; 
 }
 
 .cases h3 {
-  margin: 10px 0; 
-  color: #333; 
-  font-weight: 600; 
+  margin: 10px 0;          
+  color: #333;             
+  font-weight: 600;        
+  font-size: 18px;         
+}
+
+.cases h3:first-child {
+  color: #ff5733; 
+}
+
+.cases h3:nth-child(2) {
+  color: #28a745;
+}
+
+.cases h3:last-child {
+  color: #dc3545; 
 }

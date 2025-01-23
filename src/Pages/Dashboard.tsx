@@ -107,18 +107,20 @@ const Dashboard: React.FC = () => {
         <h3> Recovered Cases :{selectedItem?.discharged}</h3>
         <h3> Death Cases :{selectedItem?.deaths}</h3>
       </div>
-      <div className="container">
+        <div className="pieContainer">
         <PieChart values={covidCounts} labels={pieChartLabels} />
+        </div>
+        <div className="lineMapContainer">
         <LineChart
           title={`COVID-19 Cases in ${selectedItem?.loc}`}
           xAxisLabel="Categories"
           yAxisLabel="Number of Cases"
           categories={categories}
           linesData={linesData}
-        />
+          />
         <MapView geoLocation={geoLocation} />
+          </div>
       </div>
-    </div>
   );
 };
 export default Dashboard;
