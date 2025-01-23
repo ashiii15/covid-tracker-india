@@ -4,14 +4,12 @@ import { LatLngExpression } from "leaflet";
 
 interface CovidState {
   data: any[];
-  filteredData: any[];
   loading: boolean;
   geolocation: LatLngExpression;
 }
 
 const initialState: CovidState = {
   data: [],
-  filteredData: [],
   loading: false,
   geolocation: [10.1632, 76.6413]
 };
@@ -39,8 +37,7 @@ export const fetchGeoLocationByState = createAsyncThunk(
 const covidSlice = createSlice({
   name: "covid",
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCovidData.pending, (state) => {

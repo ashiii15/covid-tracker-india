@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Filter from "../components/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
+
 import {
   fetchCovidData,
   fetchGeoLocationByState,
@@ -17,6 +18,12 @@ interface CovidData {
   confirmedCasesForeign: number;
   discharged: number;
   deaths: number;
+}
+
+interface LinesData {
+  label: string;
+  color: string;
+  data: number[];
 }
 
 const Dashboard: React.FC = () => {
@@ -49,14 +56,18 @@ const Dashboard: React.FC = () => {
     }
   }, [selectedItem]);
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedItem = event.target.value;
-    const selectedData = data.find((item) => item.loc === selectedItem);
+  const handleFilterChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
+    const selectedItem: string = event.target.value;
+    const selectedData: CovidData = data.find(
+      (item) => item.loc === selectedItem
+    );
     setSelectedItem(selectedData);
     dispatch(fetchGeoLocationByState(selectedData.loc));
   };
 
-  const linesData = selectedItem
+  const linesData: LinesData[] = selectedItem
     ? [
         {
           label: "Indian Cases",
@@ -81,17 +92,21 @@ const Dashboard: React.FC = () => {
       ]
     : [];
 
-  const categories = [
+  const categories: string[] = [
     "Confirmed Cases",
     "Foreign Cases",
     "Discharged",
     "Deaths",
   ];
-
   return (
     <div>
       <h1>Covid Tracker</h1>
       <Filter data={data} handleFilterChange={handleFilterChange} />
+      <div className="cases">
+        <h3> Active Cases : {selectedItem?.confirmedCasesIndian}</h3>
+        <h3> Recovered Cases :{selectedItem?.discharged}</h3>
+        <h3> Death Cases :{selectedItem?.deaths}</h3>
+      </div>
       <div className="container">
         <PieChart values={covidCounts} labels={pieChartLabels} />
         <LineChart
